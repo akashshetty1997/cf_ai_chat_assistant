@@ -1,0 +1,15 @@
+name = "cf-ai-nutrition-coach"
+main = "dist/index.js"
+compatibility_date = "2024-01-01"
+
+[ai]
+binding = "AI"
+
+[[durable_objects.bindings]]
+name = "NUTRITION_AGENT"
+class_name = "NutritionAgentDO"
+script_name = "cf-ai-nutrition-coach"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["NutritionAgentDO"]
