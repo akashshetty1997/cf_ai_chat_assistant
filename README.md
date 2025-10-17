@@ -1,6 +1,4 @@
 
-
-```markdown
 # AI Nutrition Coach - Cloudflare Workers
 
 A real-time AI-powered nutrition coaching application built with Cloudflare Workers, Durable Objects, and React. Get personalized meal recommendations, analyze meals, and track your nutrition goals.
@@ -340,4 +338,4 @@ If you have any questions or run into issues:
 ---
 
 Built with ❤️ using Cloudflare Workers and React
-```
+
