@@ -5,9 +5,7 @@
 
 A real-time AI-powered nutrition coaching application built with Cloudflare Workers, Durable Objects, and React. Get personalized meal recommendations, analyze meals, and track your nutrition goals.
 
-![AI Nutrition Coach](https://img.shields.io/badge/Cloudflare-Workers-orange)
-![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue)
-![React](https://img.shields.io/badge/React-18-61dafb)
+
 
 ## 🌟 Features
 
