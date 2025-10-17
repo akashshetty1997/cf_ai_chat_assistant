@@ -30,14 +30,6 @@ export function ChatInterface({
   }, [messages]);
 
   const handleSendMessage = async (content: string) => {
-    // Add user message immediately
-    const userMessage: Message = {
-      id: crypto.randomUUID(),
-      role: "user",
-      content,
-      timestamp: Date.now(),
-    };
-
     // Send through WebSocket
     const sent = onSendMessage(content);
 
@@ -134,7 +126,7 @@ function EmptyState() {
       </h2>
 
       <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md">
-        I'm your AI-powered nutrition assistant. I can analyze meals, recommend
+        I'm your AI-powered nutrition assistant. I analyze meals, recommend
         food, and help you track your nutrition goals.
       </p>
 

@@ -1,18 +1,18 @@
 // frontend/src/components/MessageBubble.tsx
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
-import { Message } from '../types';
-import { Bot, User, Info } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import { Message } from "../types";
+import { Bot, User, Info } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 
 interface MessageBubbleProps {
   message: Message;
 }
 
 export function MessageBubble({ message }: MessageBubbleProps) {
-  const isUser = message.role === 'user';
-  const isSystem = message.role === 'system';
+  const isUser = message.role === "user";
+  const isSystem = message.role === "system";
 
   if (isSystem) {
     return (
@@ -26,9 +26,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   }
 
   return (
-    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
       {/* Avatar */}
-      <Avatar className={`w-8 h-8 ${isUser ? 'bg-blue-500' : 'bg-green-500'}`}>
+      <Avatar className={`w-8 h-8 ${isUser ? "bg-blue-500" : "bg-green-500"}`}>
         <AvatarFallback>
           {isUser ? (
             <User className="w-5 h-5 text-white" />
@@ -39,12 +39,16 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       </Avatar>
 
       {/* Message Content */}
-      <div className={`flex flex-col gap-1 max-w-[80%] ${isUser ? 'items-end' : 'items-start'}`}>
+      <div
+        className={`flex flex-col gap-1 max-w-[80%] ${
+          isUser ? "items-end" : "items-start"
+        }`}
+      >
         <Card
           className={`px-4 py-3 ${
             isUser
-              ? 'bg-blue-500 text-white border-blue-500'
-              : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'
+              ? "bg-blue-500 text-white border-blue-500"
+              : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
           }`}
         >
           <div className="text-sm whitespace-pre-wrap break-words">
@@ -61,27 +65,27 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   );
 }
 
-function MessageContent({ content, isUser }: { content: string; isUser: boolean }) {
+function MessageContent({ content }: { content: string; isUser: boolean }) {
   // Parse markdown-style formatting
-  const lines = content.split('\n');
+  const lines = content.split("\n");
 
   return (
     <>
       {lines.map((line, index) => {
         // Bold text: **text**
-        if (line.includes('**')) {
-          const parts = line.split('**');
+        if (line.includes("**")) {
+          const parts = line.split("**");
           return (
             <p key={index} className="mb-2 last:mb-0">
-              {parts.map((part, i) => (
+              {parts.map((part, i) =>
                 i % 2 === 1 ? <strong key={i}>{part}</strong> : part
-              ))}
+              )}
             </p>
           );
         }
 
         // List items: - item or • item
-        if (line.trim().startsWith('-') || line.trim().startsWith('•')) {
+        if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
           return (
             <li key={index} className="ml-4 mb-1">
               {line.trim().substring(1).trim()}
@@ -89,12 +93,30 @@ function MessageContent({ content, isUser }: { content: string; isUser: boolean 
           );
         }
 
-        // Numbers at start: 1. item
+        // List items: * item
+        if (line.trim().startsWith("*") && !line.includes("**")) {
+          return (
+            <li key={index} className="ml-4 mb-1">
+              {line.trim().substring(1).trim()}
+            </li>
+          );
+        }
+
+        // Numbers at start: 1. item or ### heading
         if (/^\d+\./.test(line.trim())) {
           return (
             <li key={index} className="ml-4 mb-1 list-decimal">
-              {line.trim().replace(/^\d+\.\s*/, '')}
+              {line.trim().replace(/^\d+\.\s*/, "")}
             </li>
+          );
+        }
+
+        // Headings: ### text
+        if (line.trim().startsWith("###")) {
+          return (
+            <h3 key={index} className="font-bold text-base mt-3 mb-2">
+              {line.trim().replace(/^###\s*/, "")}
+            </h3>
           );
         }
 
